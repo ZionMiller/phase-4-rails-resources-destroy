@@ -44,6 +44,20 @@ class BirdsController < ApplicationController
     end
   end
 
+  def destroy
+    bird = Bird.find_by(id: params[:id])
+    if bird
+      bird.destroy
+      heead :no_content
+      # if we want to send a json response for front end
+      # fetch theen we could do this below
+      # render json: {}
+      # if we don't the fetch will ereror out because nothing to parse
+    else
+      render json: { error: "Bird not found" }, status: :not_found
+    end
+  end
+
   private
 
   def bird_params
